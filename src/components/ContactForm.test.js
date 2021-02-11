@@ -7,11 +7,11 @@ test('renders without errors', () => {
     render(<ContactForm />)
 });
 
-test('form is filled out and submit creates an object with all information inputed', () => {
+test('form is filled out and submit creates an object with all information inputed', async () => {
+    
+    const promise = Promise.resolve()
     //render
-    act(() => {
-        render(<ContactForm />)
-    });
+    render(<ContactForm />);
 
     //query for all inputs
     const firstName = screen.getByPlaceholderText(/edd/i);
@@ -20,10 +20,10 @@ test('form is filled out and submit creates an object with all information input
     const message = screen.queryByLabelText(/message/i);
 
     //type into all inputs
-    userEvent.type(firstName, 'edd');
-    userEvent.type(lastName, 'burke');
-    userEvent.type(email, 'bluebill1049@hotmail.com');
-    userEvent.type(message, 'testing');
+    await userEvent.type(firstName, 'edd');
+    await userEvent.type(lastName, 'burke');
+    await userEvent.type(email, 'bluebill1049@hotmail.com');
+    await userEvent.type(message, 'testing');
 
     //query for button
     const button = screen.getByRole('button', { name: /submit/i })
@@ -37,4 +37,6 @@ test('form is filled out and submit creates an object with all information input
 
     //assert
     expect.objectContaining({firstName: /edd/i, lastName: /burke/i, email: /bluebill1049@hotmail.com/i, message: /testing/i});
+
+    await act(() => promise);
 })

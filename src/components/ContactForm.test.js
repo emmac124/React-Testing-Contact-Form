@@ -14,7 +14,7 @@ test('form is filled out and submit creates an object with all information input
     //query for all inputs
     const firstName = screen.findByLabelText(/first name/i);
     const lastName = screen.queryByLabelText(/last name/i);
-    const email = screen.queryByLabelText(/email/i);
+    const email = screen.findByLabelText(/email/i);
     const message = screen.queryByLabelText(/message/i)
 
     //type into all inputs
@@ -31,7 +31,7 @@ test('form is filled out and submit creates an object with all information input
     userEvent.click(button);
 
     //query for the next input
-    // const textInputs = screen.getAllByText({lastName: /cooper/i , message: /testing/i});
+    // const textInputs = screen.getByText({lastName: /cooper/i , message: /testing/i});
 
     //assert
     // expect(textInputs).toBeInTheDocument();

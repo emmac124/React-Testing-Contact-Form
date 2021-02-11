@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ContactForm from './ContactForm';
 
@@ -9,18 +9,20 @@ test('renders without errors', () => {
 
 test('form is filled out and submit creates an object with all information inputed', () => {
     //render
-    render(<ContactForm />);
+    act(() => {
+        render(<ContactForm />)
+    });
 
     //query for all inputs
-    const firstName = screen.findByLabelText(/first name/i);
-    const lastName = screen.queryByLabelText(/last name/i);
-    const email = screen.findByLabelText(/email/i);
-    const message = screen.queryByLabelText(/message/i)
+    const firstName = screen.getByPlaceholderText(/edd/i);
+    const lastName = screen.getByPlaceholderText(/burke/i);
+    const email = screen.getByPlaceholderText(/bluebill1049@hotmail.com/i);
+    const message = screen.queryByLabelText(/message/i);
 
     //type into all inputs
-    // userEvent.change(firstName, 'Emm');
-    userEvent.type(lastName, 'Cooper');
-    // userEvent.type(email, 'cooperemmey@yahoo.com');
+    userEvent.type(firstName, 'edd');
+    userEvent.type(lastName, 'burke');
+    userEvent.type(email, 'bluebill1049@hotmail.com');
     userEvent.type(message, 'testing');
 
     //query for button
@@ -31,8 +33,8 @@ test('form is filled out and submit creates an object with all information input
     userEvent.click(button);
 
     //query for the next input
-    // const textInputs = screen.getByText({lastName: /cooper/i , message: /testing/i});
+    // const textInputs = screen.getByText({firstName: /edd/i, lastName: /burke/i, email: /bluebill1049@hotmail.com/i, message: /testing/i});
 
     //assert
-    // expect(textInputs).toBeInTheDocument();
+    expect.objectContaining({firstName: /edd/i, lastName: /burke/i, email: /bluebill1049@hotmail.com/i, message: /testing/i});
 })
